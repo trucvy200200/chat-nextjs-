@@ -375,9 +375,6 @@ const UserList = ({ apiData }) => {
           {/* <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} /> */}
           <DataGrid
             rowSpacingType="border"
-            sx={{
-              '& .MuiDataGrid-row': { borderBottomColor: '#a2a2ad', borderBottomStyle: 'solid', borderBottomWidth: '1px' }
-            }}
             autoHeight
             rowHeight={62}
             rows={posts}
