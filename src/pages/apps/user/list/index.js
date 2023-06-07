@@ -16,9 +16,7 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 import InputLabel from '@mui/material/InputLabel'
-import FormControl from '@mui/material/FormControl'
-import CardContent from '@mui/material/CardContent'
-import Select from '@mui/material/Select'
+import { makeStyles } from '@material-ui/core/styles';
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -44,20 +42,16 @@ import axios from 'axios'
 import TableHeader from 'src/views/apps/user/list/TableHeader'
 import AddUserDrawer from 'src/views/apps/user/list/AddUserDrawer'
 
-// ** renders client column
-const userRoleObj = {
-  admin: { icon: 'tabler:device-laptop', color: 'secondary' },
-  author: { icon: 'tabler:circle-check', color: 'success' },
-  editor: { icon: 'tabler:edit', color: 'info' },
-  maintainer: { icon: 'tabler:chart-pie-2', color: 'primary' },
-  subscriber: { icon: 'tabler:user', color: 'warning' }
-}
 
-const userStatusObj = {
-  active: 'success',
-  pending: 'warning',
-  inactive: 'secondary'
-}
+const useStyles = makeStyles({
+  ellipsis: {
+    maxWidth: 200, // percentage also works
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+});
+
 
 // ** renders client column
 // const renderClient = row => {
@@ -146,7 +140,6 @@ const columns = [
     field: '_id',
     headerName: 'No.',
     renderCell: ({ row }) => {
-
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {/* {renderClient(row)} */}
@@ -158,7 +151,7 @@ const columns = [
               sx={{
                 fontWeight: 500,
                 textDecoration: 'none',
-                color: 'white', opacity: 0.7,
+                color: 'black',
                 '&:hover': { color: '#655BD3' }
               }}
             >
@@ -171,7 +164,7 @@ const columns = [
   },
   {
     flex: 0.4,
-    field: 'enTitle',
+    field: 'viTitle',
     minWidth: 170,
     headerName: 'Title',
     renderCell: ({ row }) => {
@@ -183,7 +176,7 @@ const columns = [
             color={'primary'}
           >
           </CustomAvatar>
-          <Typography noWrap sx={{ color: 'white', opacity: 0.7, textTransform: 'capitalize' }}>
+          <Typography className={useStyles().ellipsis} noWrap sx={{ color: 'black', textTransform: 'capitalize' }}>
             {row.viTitle}
           </Typography>
         </Box>
@@ -198,7 +191,7 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <Typography noWrap sx={{
-          fontWeight: 500, color: 'white', opacity: 0.7, textTransform: 'capitalize'
+          fontWeight: 500, color: 'black', textTransform: 'capitalize'
         }
         } >
           {row.image}
@@ -213,7 +206,7 @@ const columns = [
     headerName: 'View',
     renderCell: ({ row }) => {
       return (
-        <Typography noWrap sx={{ color: 'white', opacity: 0.7 }}>
+        <Typography noWrap sx={{ color: 'black' }}>
           {row.view}
         </Typography>
       )
@@ -232,7 +225,7 @@ const columns = [
           size='small'
           label={row.user.fullname}
 
-          sx={{ color: 'white', opacity: 0.7, textTransform: 'capitalize' }}
+          sx={{ color: 'black', textTransform: 'capitalize' }}
         />
       )
     }
@@ -244,9 +237,10 @@ const columns = [
     field: 'createdAt',
     headerName: 'Created At',
     renderCell: ({ row }) => {
+      const date = new Date(row.createdAt);
       return (
-        <Typography noWrap sx={{ color: 'white', opacity: 0.7 }}>
-          {row.createdAt}
+        <Typography noWrap sx={{ color: 'black' }}>
+          {new Date(date).toLocaleString()}
         </Typography>
       )
     }
@@ -257,7 +251,6 @@ const UserList = ({ apiData }) => {
   // ** State
   const [posts, setPosts] = useState([])
   const [pageSize, setPageSize] = useState(10)
-  const store = useSelector(state => state.data)
   useEffect(async () => {
     await fetch('https://gw.qc.askany-technology.com/user/discover', {
       method: 'GET',
@@ -382,7 +375,9 @@ const UserList = ({ apiData }) => {
           {/* <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} /> */}
           <DataGrid
             rowSpacingType="border"
-            sx={{ backgroundColor: "#2b2b2b", '& .MuiDataGrid-row': { borderBottomColor: '#a2a2ad', borderBottomStyle: 'solid', borderBottomWidth: '1px' } }}
+            sx={{
+              '& .MuiDataGrid-row': { borderBottomColor: '#a2a2ad', borderBottomStyle: 'solid', borderBottomWidth: '1px' }
+            }}
             autoHeight
             rowHeight={62}
             rows={posts}
