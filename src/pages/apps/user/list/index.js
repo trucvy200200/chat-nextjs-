@@ -151,7 +151,7 @@ const columns = [
               sx={{
                 fontWeight: 500,
                 textDecoration: 'none',
-                color: 'black',
+                color: 'text.secondary',
                 '&:hover': { color: '#655BD3' }
               }}
             >
@@ -176,10 +176,10 @@ const columns = [
             color={'primary'}
           >
           </CustomAvatar>
-          <Typography className={useStyles().ellipsis} noWrap sx={{ color: 'black', textTransform: 'capitalize' }}>
+          <Typography className={useStyles().ellipsis} noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
             {row.viTitle}
           </Typography>
-        </Box>
+        </Box >
       )
     }
   },
@@ -191,7 +191,7 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <Typography noWrap sx={{
-          fontWeight: 500, color: 'black', textTransform: 'capitalize'
+          fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize'
         }
         } >
           {row.image}
@@ -206,7 +206,7 @@ const columns = [
     headerName: 'View',
     renderCell: ({ row }) => {
       return (
-        <Typography noWrap sx={{ color: 'black' }}>
+        <Typography noWrap sx={{ color: 'text.secondary', }}>
           {row.view}
         </Typography>
       )
@@ -220,12 +220,12 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <CustomChip
-          rounded
+          //rounded
           skin='light'
           size='small'
           label={row.user.fullname}
 
-          sx={{ color: 'black', textTransform: 'capitalize' }}
+          sx={{ color: 'text.secondary', textTransform: 'capitalize' }}
         />
       )
     }
@@ -239,7 +239,7 @@ const columns = [
     renderCell: ({ row }) => {
       const date = new Date(row.createdAt);
       return (
-        <Typography noWrap sx={{ color: 'black' }}>
+        <Typography noWrap sx={{ color: 'text.secondary' }}>
           {new Date(date).toLocaleString()}
         </Typography>
       )

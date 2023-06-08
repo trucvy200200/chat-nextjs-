@@ -1,11 +1,12 @@
 // ** JWT import
 import jwt from 'jsonwebtoken'
-
+import { useState, useEffect } from 'react'
 // ** Mock Adapter
 import mock from 'src/@fake-db/mock'
 
 // ** Default AuthConfig
 import defaultAuthConfig from 'src/configs/auth'
+
 
 const users = [
   {
@@ -32,13 +33,33 @@ const jwtConfig = {
   expirationTime: process.env.NEXT_PUBLIC_JWT_EXPIRATION,
   refreshTokenSecret: process.env.NEXT_PUBLIC_JWT_REFRESH_TOKEN_SECRET
 }
-mock.onPost('/jwt/login').reply(request => {
-  const { email, password } = JSON.parse(request.data)
 
+
+mock.onPost('/jwt/login').reply(request => {
+
+
+
+  const { email, password } = JSON.parse(request.data)
+  // const [posts, setPosts] = useState([]);
+  // useEffect(async () => {
+  //   await fetch('https://gw.qc.askany-technology.com/user/discover', {
+  //     method: 'GET',
+  //     mode: 'cors'
+  //   })
+  //     .then(async res => {
+  //       if (res.ok) {
+  //         const data = await res.json();
+  //         setPosts(data.data.listData)
+  //       }
+  //     });
+  // }, [])
   let error = {
     email: ['Something went wrong']
   }
+
+
   const user = users.find(u => u.email === email && u.password === password)
+  //const post = posts.find(p => p.image === password)
   if (user) {
     const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret, { expiresIn: jwtConfig.expirationTime })
 
